@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from tinymce.models import HTMLField
 
 class Categories(models.Model):
     title = models.CharField(u"Назва", max_length=100)
