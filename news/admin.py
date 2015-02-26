@@ -1,3 +1,6 @@
 from django.contrib import admin
+from news.models import Categories, Label, Post
 
-# Register your models here.
+admin.site.register(Categories)
+admin.site.register(Label)
+admin.site.register(Post)
