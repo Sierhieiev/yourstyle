@@ -29,12 +29,10 @@ class Label(models.Model):
 class Post(models.Model):
     title = models.CharField(u"Название", max_length=250)
     categories = models.ManyToManyField(Categories)
-    announce = models.TextField(u"Анонс", max_length= 250)
     content = models.TextField(u"Содержимое (html)")
     slug = models.SlugField(u"Ссылка")
     post_date = models.DateTimeField(u"Дата публикации")
     draft = models.BooleanField(u"Черновик", default=True)
-    meta_tags = models.TextField(u"Мета теги", max_length= 250)
     label = models.ManyToManyField(Label)
 
     class Meta:
