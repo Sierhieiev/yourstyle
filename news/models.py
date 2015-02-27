@@ -4,7 +4,7 @@ from django.db import models
 class Categories(models.Model):
     title = models.CharField(u"Название", max_length=100)
     slug = models.SlugField(u"Ссылка")
-    parent = models.ForeignKey('self')
+    parent = models.ForeignKey('self', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Категорию'
@@ -28,12 +28,12 @@ class Label(models.Model):
 
 class Post(models.Model):
     title = models.CharField(u"Название", max_length=250)
-    categories = models.ManyToManyField(Categories)
+    categories = models.ManyToManyField(Categories, blank=True, null=True)
     content = models.TextField(u"Содержимое (html)")
     slug = models.SlugField(u"Ссылка")
     post_date = models.DateTimeField(u"Дата публикации")
-    draft = models.BooleanField(u"Черновик", default=True)
-    label = models.ManyToManyField(Label)
+    draft = models.BooleanField(u"Черновик", default=False)
+    label = models.ManyToManyField(Label, blank=True, null=True)
 
     class Meta:
         verbose_name = 'Новость'
