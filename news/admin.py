@@ -16,7 +16,7 @@ class AdminPost(admin.ModelAdmin):
     prepopulated_fields = {
         'slug': ('title',),
     }
-    list_display = ('title', 'post_date', 'draft')
+    list_display = ('title', 'post_date', 'draft', 'slug')
 
     class Media:
         js = (
@@ -30,6 +30,11 @@ class AdminCategories(admin.ModelAdmin):
     }
     list_display = ('title', 'parent')
 
+class AdminLabel(admin.ModelAdmin):
+    prepopulated_fields = {
+        'slug': ('title',),
+    }
+
 admin.site.register(Categories, AdminCategories)
-admin.site.register(Label)
+admin.site.register(Label, AdminLabel)
 admin.site.register(Post, AdminPost)

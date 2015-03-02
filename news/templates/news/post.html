@@ -1,0 +1,11 @@
+{% extends 'news/base.html' %}
+
+{% block news_title %}{{ news.title }}{% endblock %}
+
+{% block news_content %}
+    <h1><a href="{{ news.get_absolute_url }}">{{ news.title }}</a></h1>
+    <p>Дата публікації: {{ news.post_date }} </p>
+    {{ news.content }}
+
+    
+{% endblock %}
