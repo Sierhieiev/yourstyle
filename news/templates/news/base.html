@@ -1,9 +1,31 @@
 {% extends 'base.html' %}
 
-{% block title %}
+{% block head_title %}
     {% block news_title %} {% endblock %}
 {% endblock %}
 
 {% block content %}
-    {% block news_content %} {% endblock %}
+
+    <div class="blog-header">
+        {% block news_header %}
+            <h1 class="blog-title">Це блог Bootstrap</h1>
+            <p class="lead blog-description">Офіційний приклад шаблону створений для блогу Bootstrap.</p>
+        {% endblock %}
+
+    </div>
+
+    {% block news_content %}
+        <div class="row">
+
+            <div class="col-sm-8 blog-main"> <!-- /.blog-main -->
+                {% block class_blog-main %} {% endblock %}
+            </div><!-- /.blog-main -->
+
+            <div class="col-sm-3 col-sm-offset-1 blog-sidebar"><!-- /.blog-sidebar -->
+                {% block class_blog-sidebar %} {% endblock %}
+            </div><!-- /.blog-sidebar -->
+
+        </div><!-- /.row -->
+    {% endblock %}
 {% endblock %}
+

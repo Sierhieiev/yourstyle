@@ -4,10 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Your Style {% endblock %}</title>
+    <title>{% block head_title %}Your Style {% endblock %}</title>
 
     <!-- Bootstrap -->
     <link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{STATIC_URL}}bootstrap/css/blog.css" rel="stylesheet">
 
     <!-- Вставка HTML5 поєднується з Respond.js для підтримки в IE8 елементів HTML5 та медіа-запитів -->
     <!-- ЗАСТЕРЕЖЕННЯ: файл Respond.js не працює, якщо ви проглядаєте сторінку відкривши її з файлової системи -->
@@ -18,25 +19,37 @@
   </head>
   <body>
 
-    <div class="container">
+      <div class="container">
+          {% block top_content %}
+              <div class="masthead">
+                  <h3 class="text-muted">YourStyle</h3>
 
-      <div class="masthead">
-        <h3 class="text-muted">YourStyle</h3>
-        <nav>
-          <ul class="nav nav-justified">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="/admin">Admin</a></li>
-            <li><a href="/news">news</a></li>
-            <li><a href="#">Downloads</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
-        </nav>
+                  <nav>
+
+                      <ul class="nav nav-justified">
+                          <li class="active"><a href="/">Головна</a></li>
+                          <li><a href="/news">Новини</a></li>
+                          <li><a href="/admin">Адмінка</a></li>
+                          <li><a href="/about">About</a></li>
+                          <li><a href="#">Downloads</a></li>
+                          <li><a href="#">Contact</a></li>
+                      </ul>
+                </nav>
+              </div>
+          {% endblock %}
+
+          {% block content %}{% endblock %}
+
+          {% block footer %}{% endblock %}
+
       </div>
 
-    {% block content %}{% endblock %}
-
-    </div>
+      <footer class="blog-footer">
+      <p>Шаблон блогу побудовано для <a href="http://getbootstrap.com">Bootstrap</a> від <a href="https://twitter.com/mdo">@mdo</a>.</p>
+      <p>
+        <a href="#">Піднятись вгору</a>
+      </p>
+    </footer>
 
     <!-- jQuery (потрібно для JavaScript плагінів Bootstrap) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

@@ -30,6 +30,9 @@ class Label(models.Model):
     def __unicode__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('news:label', kwargs={'slug' : self.slug})
+
 
 class Post(models.Model):
     title = models.CharField(u"Название", max_length=250)

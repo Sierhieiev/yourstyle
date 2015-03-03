@@ -1,0 +1,50 @@
+{% extends 'news/base.html' %}
+
+{% block news_title %}Останні новини{% endblock %}
+
+
+
+    {% block class_blog-main %}
+        {% for post in context.posts %}
+            <div class="blog-post"> <!-- /.blog-post -->
+                <h2 class="blog-post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+                <p class="blog-post-meta">{{ post.post_date }} </p>
+            </div><!-- /.blog-post -->
+        {% endfor %}
+
+        <nav>
+            <ul class="pager">
+                <li><a href="#">Попередня</a></li>
+                <li><a href="#">Наступна</a></li>
+            </ul>
+        </nav>
+    {% endblock %}
+
+
+    {% block class_blog-sidebar %}
+
+        <div class="sidebar-module sidebar-module-inset">
+            <h4>Про сайт</h4>
+            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+        </div>
+
+        <div class="sidebar-module">
+            <h4>Кактегорії</h4>
+            <ol class="list-unstyled">
+                {% for category in context.categories %}
+                    <li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
+                {% endfor %}
+            </ol>
+        </div>
+
+        <div class="sidebar-module">
+            <h4>Мітки</h4>
+            <ol class="list-unstyled">
+                {% for label in context.labels %}
+                    <li><a href="{{ label.get_absolute_url }}">{{ label.title }}</a></li>
+                {% endfor %}
+            </ol>
+        </div>
+
+    {% endblock %}
+

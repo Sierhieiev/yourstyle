@@ -4,19 +4,51 @@ from news.models import Categories, Label, Post
 
 
 class IndexView(generic.ListView):
-    template_name = 'news/index.html'
+    template_name = 'news/list.html'
     context_object_name = 'context'
     posts = Post.objects.filter(draft = False).order_by('-post_date')
     categories = Categories.objects.all()
+    labels = Label.objects.all()
     queryset = {
         'posts': posts,
-        'categories': categories
+        'categories': categories,
+        'labels': labels
     }
+
+class CategoriesView(generic.ListView):
+    template_name = 'news/list.html'
+    context_object_name = 'context'
+
+    def get_queryset(self):
+        category = Categories.objects.filter(slug = self.kwargs['slug'])
+        posts = Post.objects.filter(categories = category).order_by('-post_date')
+        categories = Categories.objects.all()
+        labels = Label.objects.all()
+        queryset = {
+            'posts': posts,
+            'categories': categories,
+            'labels': labels
+        }
+        return queryset
+
+class LabelView(generic.ListView):
+    template_name = 'news/list.html'
+    context_object_name = 'context'
+
+    def get_queryset(self):
+        label = Label.objects.filter(slug = self.kwargs['slug'])
+        posts = Post.objects.filter(label = label).order_by('-post_date')
+        categories = Categories.objects.all()
+        labels = Label.objects.all()
+        queryset = {
+            'posts': posts,
+            'categories': categories,
+            'labels': labels
+        }
+        return queryset
 
 def post(request, slug):
     news = get_object_or_404(Post, slug = slug)
-    return render(request, 'news/post.html', {'news': news})
+    return render(request, 'news/post.html', {'post': news})
 
-def category(request, slug):
-    categories = get_object_or_404(Categories, slug = slug)
-    return render(request, 'news/post.html', {'categories': categories})
+
