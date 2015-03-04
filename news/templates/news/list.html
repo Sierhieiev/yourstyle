@@ -9,6 +9,8 @@
             <div class="blog-post"> <!-- /.blog-post -->
                 <h2 class="blog-post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
                 <p class="blog-post-meta">{{ post.post_date }} </p>
+                {{ post.get_preview |safe}}
+                <a href="{{ post.get_absolute_url }}">Читати далі</a>
             </div><!-- /.blog-post -->
         {% endfor %}
 

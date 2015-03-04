@@ -47,8 +47,18 @@ class LabelView(generic.ListView):
         }
         return queryset
 
-def post(request, slug):
-    news = get_object_or_404(Post, slug = slug)
-    return render(request, 'news/post.html', {'post': news})
+class PostView(generic.DetailView):
+    template_name = 'news/post.html'
+    context_object_name = 'post'
+    model = Post
+
+    def get_context_data(self, **kwargs):
+        context = super(PostView, self).get_context_data(**kwargs)
+        labels = Label.objects.all()
+        categories = Categories.objects.all()
+        context['categories'] = categories
+        context['labels'] = labels
+        return context
+
 
 

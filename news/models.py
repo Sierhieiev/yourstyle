@@ -52,3 +52,8 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('news:post', kwargs={'slug' : self.slug})
+
+    def get_preview(self):
+        post_text = self.content
+        arr = post_text.split('<!--more-->')
+        return arr[0]
