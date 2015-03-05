@@ -1,51 +1,39 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from news.models import Categories, Label, Post
 
 
-class IndexView(generic.ListView):
+class GenericListView(generic.ListView):
     template_name = 'news/list.html'
-    context_object_name = 'context'
-    posts = Post.objects.filter(draft = False).order_by('-post_date')
-    categories = Categories.objects.all()
-    labels = Label.objects.all()
-    queryset = {
-        'posts': posts,
-        'categories': categories,
-        'labels': labels
-    }
-
-class CategoriesView(generic.ListView):
-    template_name = 'news/list.html'
-    context_object_name = 'context'
+    context_object_name = 'posts'
+    page_title = u'Останні новини'
 
     def get_queryset(self):
-        category = Categories.objects.filter(slug = self.kwargs['slug'])
-        posts = Post.objects.filter(categories = category).order_by('-post_date')
-        categories = Categories.objects.all()
-        labels = Label.objects.all()
-        queryset = {
-            'posts': posts,
-            'categories': categories,
-            'labels': labels
-        }
-        return queryset
+        path_info = self.request.path_info
+        if path_info.find('/news/label/') != -1:
+            label = get_object_or_404(Label, slug = self.kwargs['slug'])
+            posts = Post.objects.filter(label = label).order_by('-post_date')
+            self.page_title = label.title
+        elif path_info.find('/news/category/') != -1:
+            category = get_object_or_404(Categories, slug = self.kwargs['slug'])
+            posts = Post.objects.filter(categories = category).order_by('-post_date')
+            self.page_title = category.title
+        else:
+            posts = Post.objects.filter(draft = False).order_by('-post_date')
+        return posts
 
-class LabelView(generic.ListView):
-    template_name = 'news/list.html'
-    context_object_name = 'context'
-
-    def get_queryset(self):
-        label = Label.objects.filter(slug = self.kwargs['slug'])
-        posts = Post.objects.filter(label = label).order_by('-post_date')
-        categories = Categories.objects.all()
+    def get_context_data(self, **kwargs):
+        context = super(GenericListView, self).get_context_data(**kwargs)
         labels = Label.objects.all()
-        queryset = {
-            'posts': posts,
-            'categories': categories,
-            'labels': labels
-        }
-        return queryset
+        categories = Categories.objects.all()
+        context['categories'] = categories
+        context['labels'] = labels
+        context['page_title'] = self.page_title
+        dates = Post.objects.values('post_date')
+        context['dates'] = dates
+        return context
+
 
 class PostView(generic.DetailView):
     template_name = 'news/post.html'
@@ -60,5 +48,18 @@ class PostView(generic.DetailView):
         context['labels'] = labels
         return context
 
+class ArchiveView(generic.MonthArchiveView):
+    model = Post
+    template_name = 'news/list.html'
+    context_object_name = 'posts'
+    date_field="post_date"
+    month_format='%m'
 
+    def get_context_data(self, **kwargs):
+        context = super(ArchiveView, self).get_context_data(**kwargs)
+        labels = Label.objects.all()
+        categories = Categories.objects.all()
+        context['categories'] = categories
+        context['labels'] = labels
+        return context
 

@@ -1,11 +1,13 @@
 {% extends 'news/base.html' %}
 
-{% block news_title %}Останні новини{% endblock %}
+{% block news_title %}{{ page_title }}{% endblock %}
 
-
+{% block news_header %}
+    <h1 class="blog-title">{{ page_title }}</h1>
+{% endblock %}
 
     {% block class_blog-main %}
-        {% for post in context.posts %}
+        {% for post in posts %}
             <div class="blog-post"> <!-- /.blog-post -->
                 <h2 class="blog-post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
                 <p class="blog-post-meta">{{ post.post_date }} </p>
@@ -33,7 +35,7 @@
         <div class="sidebar-module">
             <h4>Кактегорії</h4>
             <ol class="list-unstyled">
-                {% for category in context.categories %}
+                {% for category in categories %}
                     <li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
                 {% endfor %}
             </ol>
@@ -42,8 +44,17 @@
         <div class="sidebar-module">
             <h4>Мітки</h4>
             <ol class="list-unstyled">
-                {% for label in context.labels %}
+                {% for label in labels %}
                     <li><a href="{{ label.get_absolute_url }}">{{ label.title }}</a></li>
+                {% endfor %}
+            </ol>
+        </div>
+
+        <div class="sidebar-module">
+            <h4>Архів</h4>
+            <ol class="list-unstyled">
+                {% for date in dates %}
+                    {{ date }}
                 {% endfor %}
             </ol>
         </div>
