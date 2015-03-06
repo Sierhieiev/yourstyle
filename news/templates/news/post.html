@@ -39,4 +39,13 @@
             </ol>
         </div>
 
+    <div class="sidebar-module">
+            <h4>Архів</h4>
+            <ol class="list-unstyled">
+                {% for date in dates %}
+                    <li><a href="{% url 'news:archive' date|date:'Y' date|date:'m' %}"> {{ date|date:'F Y' }} </a></li>
+                {% endfor %}
+            </ol>
+        </div>
+
 {% endblock %}

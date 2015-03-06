@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
+import datetime
 from django.shortcuts import render, get_object_or_404
+from django.template import defaultfilters
 from django.views import generic
 from news.models import Categories, Label, Post
 
@@ -14,7 +16,7 @@ class GenericListView(generic.ListView):
         if path_info.find('/news/label/') != -1:
             label = get_object_or_404(Label, slug = self.kwargs['slug'])
             posts = Post.objects.filter(label = label).order_by('-post_date')
-            self.page_title = label.title
+            self.page_title = label.title.capitalize()
         elif path_info.find('/news/category/') != -1:
             category = get_object_or_404(Categories, slug = self.kwargs['slug'])
             posts = Post.objects.filter(categories = category).order_by('-post_date')
@@ -30,7 +32,7 @@ class GenericListView(generic.ListView):
         context['categories'] = categories
         context['labels'] = labels
         context['page_title'] = self.page_title
-        dates = Post.objects.values('post_date')
+        dates = Post.objects.datetimes('post_date', 'month')
         context['dates'] = dates
         return context
 
@@ -46,6 +48,8 @@ class PostView(generic.DetailView):
         categories = Categories.objects.all()
         context['categories'] = categories
         context['labels'] = labels
+        dates = Post.objects.datetimes('post_date', 'month')
+        context['dates'] = dates
         return context
 
 class ArchiveView(generic.MonthArchiveView):
@@ -61,5 +65,11 @@ class ArchiveView(generic.MonthArchiveView):
         categories = Categories.objects.all()
         context['categories'] = categories
         context['labels'] = labels
+        dates = Post.objects.datetimes('post_date', 'month')
+        context['dates'] = dates
+        month = self.kwargs['month']
+        year = self.kwargs['year']
+        current_month_archive = datetime.date(int(year), int(month), 1)
+        context['page_title'] = defaultfilters.date(current_month_archive, 'F Y')
         return context
 
