@@ -18,11 +18,11 @@ class AdminPost(admin.ModelAdmin):
     }
     list_display = ('title', 'post_date', 'draft', 'slug')
 
-    class Media:
+    '''class Media:
         js = (
             '/static/tinymce/tinymce.min.js',
             '/static/tinymce/tinymce_init.js',
-        )
+        )'''
 
 class AdminCategories(admin.ModelAdmin):
     prepopulated_fields = {

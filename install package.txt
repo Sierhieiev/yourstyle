@@ -1,0 +1,5 @@
+package
+psycopg2-2.6.0.win32-py2.7-pg9.4.1-release (win install)
+Django CKEditor (https://github.com/django-ckeditor/django-ckeditor)
+pillow
+django-disqus (http://django-disqus.readthedocs.org/en/latest/installation.html)

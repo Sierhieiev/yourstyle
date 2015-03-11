@@ -2,6 +2,7 @@
 from django.db import models
 from django.utils import timezone
 from django.core.urlresolvers import reverse
+from ckeditor.fields import RichTextField
 
 class Categories(models.Model):
     title = models.CharField(u"Название", max_length=100)
@@ -37,7 +38,8 @@ class Label(models.Model):
 class Post(models.Model):
     title = models.CharField(u"Название", max_length=250)
     categories = models.ManyToManyField(Categories, blank=True, null=True)
-    content = models.TextField(u"Содержимое (html)")
+#    content = models.TextField(u"Содержимое (html)")
+    content = RichTextField(u"Содержимое", config_name='default_config')
     slug = models.SlugField(u"Ссылка")
     post_date = models.DateTimeField(u"Дата публикации", default = timezone.now())
     draft = models.BooleanField(u"Черновик", default=False)

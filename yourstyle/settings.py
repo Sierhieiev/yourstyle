@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.flatpages',
     'news',
+    'ckeditor',
+    'disqus',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -65,7 +67,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'yourstyle',
         'USER': 'yourstyle',
-        'PASSWORD': 'Gbdj_Hekbnm',
+        'PASSWORD': '5iUQZL',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -87,15 +89,38 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
-
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR,  'templates'),
-)
+TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
 
 SITE_ID = 1
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+#wysiwyg editor
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+
+CKEDITOR_CONFIGS = {
+    'default_config': {
+        'extraPlugins': 'wpmore',
+        'toolbar': [
+            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
+            [ 'Link','Unlink','Anchor'],
+            ['Image', 'Flash', 'Table', 'HorizontalRule'],
+            ['TextColor', 'BGColor'],
+            ['Smiley', 'SpecialChar'], ['Source'], ['WPMore']
+        ],
+        'height': 291,
+        'width': 835,
+        'filebrowserWindowWidth': 940,
+        'filebrowserWindowHeight': 725,
+    },
+}
+
+#comments
+DISQUS_API_KEY = 'Sp7YvQOTOs6hfmTddccuWcVtKba0ieDihxfCbL198AucjuzaBDQrnP0B1Tld4e7N'
+DISQUS_WEBSITE_SHORTNAME = 'yourstyleinua'

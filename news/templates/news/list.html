@@ -19,8 +19,16 @@
 
     <nav>
         <ul class="pager">
-            <li><a href="#">Попередня</a></li>
-            <li><a href="#">Наступна</a></li>
+
+            {% if posts.has_previous %}
+                <li><a href="?page={{ posts.previous_page_number }}">Попередня</a></li>
+            {% endif %}
+
+
+
+            {% if posts.has_next %}
+                <li><a href="?page={{ posts.next_page_number }}">Наступна</a></li>
+            {% endif %}
         </ul>
     </nav>
 

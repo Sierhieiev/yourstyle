@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template import defaultfilters
 from django.views import generic
 from news.models import Categories, Label, Post
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class GenericListView(generic.ListView):
@@ -13,16 +14,20 @@ class GenericListView(generic.ListView):
 
     def get_queryset(self):
         path_info = self.request.path_info
+
         if path_info.find('/news/label/') != -1:
             label = get_object_or_404(Label, slug = self.kwargs['slug'])
-            posts = Post.objects.filter(label = label).order_by('-post_date')
+            posts_list = Post.objects.filter(label = label, draft = False).order_by('-post_date')
             self.page_title = label.title.capitalize()
         elif path_info.find('/news/category/') != -1:
             category = get_object_or_404(Categories, slug = self.kwargs['slug'])
-            posts = Post.objects.filter(categories = category).order_by('-post_date')
+            posts_list = Post.objects.filter(categories = category, draft = False).order_by('-post_date')
             self.page_title = category.title
         else:
-            posts = Post.objects.filter(draft = False).order_by('-post_date')
+            posts_list = Post.objects.filter(draft = False).order_by('-post_date')
+
+        page = self.request.GET.get('page')
+        posts = create_paginator(posts_list, page)
         return posts
 
     def get_context_data(self, **kwargs):
@@ -71,5 +76,20 @@ class ArchiveView(generic.MonthArchiveView):
         year = self.kwargs['year']
         current_month_archive = datetime.date(int(year), int(month), 1)
         context['page_title'] = defaultfilters.date(current_month_archive, 'F Y')
+
+        posts_list = kwargs['object_list']
+        page = self.request.GET.get('page')
+        context['posts'] = create_paginator(posts_list, page)
         return context
 
+def create_paginator(posts_list, page):
+    paginator = Paginator(posts_list, 5)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        posts = paginator.page(paginator.num_pages)
+    return posts
