@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'news',
     'ckeditor',
     'disqus',
+    'statick_pages'
 )
 
 MIDDLEWARE_CLASSES = (

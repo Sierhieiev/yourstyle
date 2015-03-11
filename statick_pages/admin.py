@@ -2,23 +2,23 @@ from django.contrib import admin
 from django.contrib.flatpages.models import FlatPage
 
 # Note: we are renaming the original Admin and Form as we import them!
-from django.contrib.flatpages.admin import FlatPageAdmin as FlatPageAdminOld
-from django.contrib.flatpages.admin import FlatpageForm as FlatpageFormOld
+from django.contrib.flatpages.admin import FlatPageAdmin
+from django.contrib.flatpages.admin import FlatpageForm
 
 from django import forms
 from ckeditor.widgets import CKEditorWidget
 
-class FlatpageForm(FlatpageFormOld):
-    content = forms.CharField(widget=CKEditorWidget())
+class StatickPageForm(FlatpageForm):
+    content = forms.CharField(widget=CKEditorWidget(config_name='default_config'))
     class Meta:
         model = FlatPage # this is not automatically inherited from FlatpageFormOld
 
 
-class FlatPageAdmin(FlatPageAdminOld):
-    form = FlatpageForm
+class StatickPageAdmin(FlatPageAdmin):
+    form = StatickPageForm
 
 
 # We have to unregister the normal admin, and then reregister ours
 admin.site.unregister(FlatPage)
-admin.site.register(FlatPage, FlatPageAdmin)
+admin.site.register(FlatPage, StatickPageAdmin)
 

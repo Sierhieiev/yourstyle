@@ -2,6 +2,7 @@ from django.contrib import admin
 from news.models import Categories, Label, Post
 
 class AdminPost(admin.ModelAdmin):
+    filter_horizontal = ('categories', 'label',)
     fieldsets = (
         (None, {
             'fields': ('title', 'slug', 'post_date', 'draft')
@@ -16,13 +17,8 @@ class AdminPost(admin.ModelAdmin):
     prepopulated_fields = {
         'slug': ('title',),
     }
-    list_display = ('title', 'post_date', 'draft', 'slug')
-
-    '''class Media:
-        js = (
-            '/static/tinymce/tinymce.min.js',
-            '/static/tinymce/tinymce_init.js',
-        )'''
+    list_display = ('title', 'post_date', 'draft', 'slug', 'get_categories_list')
+    list_filter = ('post_date', 'draft', 'categories', 'label')
 
 class AdminCategories(admin.ModelAdmin):
     prepopulated_fields = {
