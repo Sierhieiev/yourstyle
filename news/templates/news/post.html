@@ -23,31 +23,6 @@
 
 {% block class_blog-sidebar %}
 
-    <div class="sidebar-module sidebar-module-inset">
-        <h4>Кактегорії</h4>
-        <ol class="list-unstyled">
-            {% for category in categories %}
-                <li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
-            {% endfor %}
-        </ol>
-    </div>
-
-    <div class="sidebar-module">
-        <h4>Мітки</h4>
-        <ol class="list-unstyled">
-            {% for label in labels %}
-                <li><a href="{{ label.get_absolute_url }}">{{ label.title }}</a></li>
-            {% endfor %}
-        </ol>
-    </div>
-
-    <div class="sidebar-module">
-        <h4>Архів</h4>
-        <ol class="list-unstyled">
-            {% for date in dates %}
-                <li><a href="{% url 'news:archive' date|date:'Y' date|date:'m' %}"> {{ date|date:'F Y' }} </a></li>
-            {% endfor %}
-        </ol>
-    </div>
+    {% include "news/sidebar.html" %}
 
 {% endblock %}

@@ -63,3 +63,7 @@ class Post(models.Model):
     def get_categories_list(self):
         return u" %s" % (u", ".join([category.title for category in self.categories.all()]))
     get_categories_list.short_description = u'Категорії'
+
+    def get_labels_list(self):
+        return u" %s" % (u", ".join([label.title for label in self.label.all()]))
+    get_labels_list.short_description = u'Мітки'

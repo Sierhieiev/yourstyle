@@ -10,6 +10,7 @@ from ckeditor.widgets import CKEditorWidget
 
 class StatickPageForm(FlatpageForm):
     content = forms.CharField(widget=CKEditorWidget(config_name='default_config'))
+
     class Meta:
         model = FlatPage # this is not automatically inherited from FlatpageFormOld
 

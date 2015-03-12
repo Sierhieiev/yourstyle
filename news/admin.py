@@ -17,8 +17,9 @@ class AdminPost(admin.ModelAdmin):
     prepopulated_fields = {
         'slug': ('title',),
     }
-    list_display = ('title', 'post_date', 'draft', 'slug', 'get_categories_list')
+    list_display = ('title', 'post_date', 'draft', 'slug', 'get_categories_list', 'get_labels_list')
     list_filter = ('post_date', 'draft', 'categories', 'label')
+    search_fields = ['title']
 
 class AdminCategories(admin.ModelAdmin):
     prepopulated_fields = {
