@@ -6,7 +6,7 @@ from ckeditor.fields import RichTextField
 
 class Categories(models.Model):
     title = models.CharField(u"Назва", max_length=100)
-    slug = models.SlugField(u"Посилання")
+    slug = models.SlugField(u"Посилання", unique=True)
     parent = models.ForeignKey('self', blank=True, null=True, verbose_name = 'Батьківська категорія')
 
     class Meta:
@@ -22,7 +22,7 @@ class Categories(models.Model):
 
 class Label(models.Model):
     title = models.CharField(u"Назва", max_length=100)
-    slug = models.SlugField(u"Посилання")
+    slug = models.SlugField(u"Посилання", unique=True)
 
     class Meta:
         verbose_name = 'Мітку'
@@ -40,7 +40,7 @@ class Post(models.Model):
     categories = models.ManyToManyField(Categories, blank=True, null=True, verbose_name = u'Категорії')
 #    content = models.TextField(u"Содержимое (html)")
     content = RichTextField(u"Контент", config_name='default_config')
-    slug = models.SlugField(u"Посилання")
+    slug = models.SlugField(u"Посилання", unique=True)
     post_date = models.DateTimeField(u"Дата публікації", default = timezone.now())
     draft = models.BooleanField(u"Чорновик", default=False)
     label = models.ManyToManyField(Label, blank=True, null=True, verbose_name = u'Мітки')

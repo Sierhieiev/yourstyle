@@ -13,6 +13,7 @@ class StatickPageForm(FlatpageForm):
 
     class Meta:
         model = FlatPage # this is not automatically inherited from FlatpageFormOld
+        fields = '__all__'
 
 
 class StatickPageAdmin(FlatPageAdmin):

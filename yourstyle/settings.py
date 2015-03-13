@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for yourstyle project.
 
@@ -41,7 +42,8 @@ INSTALLED_APPS = (
     'news',
     'ckeditor',
     'disqus',
-    'statick_pages'
+    'statick_pages',
+    'settings'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -125,3 +127,6 @@ CKEDITOR_CONFIGS = {
 #comments
 DISQUS_API_KEY = 'Sp7YvQOTOs6hfmTddccuWcVtKba0ieDihxfCbL198AucjuzaBDQrnP0B1Tld4e7N'
 DISQUS_WEBSITE_SHORTNAME = 'yourstyleinua'
+
+import app_settings
+LOCAL_USER_SETTINGS = app_settings.initialize_settings()

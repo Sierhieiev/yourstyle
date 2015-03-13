@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %} Головна сторінка {% endblock %}
+{% block head_title %} {{ site_title }} {% endblock %}
 
 {% block content %}
     <h1>{{ text }} </h1>
+    {{ site_title }}
 {% endblock %}
 
