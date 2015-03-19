@@ -1,5 +1,6 @@
 from django.contrib import admin
-from settings.models import Section, SettingsGroup, FieldGroup, Field
+from settings.models import Section, SettingsGroup, Field
+
 
 class SectionAdmin(admin.ModelAdmin):
     prepopulated_fields = {
@@ -7,6 +8,5 @@ class SectionAdmin(admin.ModelAdmin):
     }
 
 admin.site.register(Section, SectionAdmin)
-admin.site.register(FieldGroup)
-admin.site.register(Field)
 admin.site.register(SettingsGroup)
+admin.site.register(Field)
